@@ -21,10 +21,7 @@ app = FastAPI(
 @app.on_event("startup")
 async def startup_event():
     """Initialize database connection pool on startup"""
-    try:
-        init_connection_pool()
-    except Exception as e:
-        logger.warning(f"Database connection failed: {e}")
+    init_connection_pool()  # let it raise; container/app exits if DB is unreachable
 
 
 @app.on_event("shutdown")
