@@ -30,4 +30,3 @@ jobs:
       run: |
         # Verify code format
         ruff format --check .
-        

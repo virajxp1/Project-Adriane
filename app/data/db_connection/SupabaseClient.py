@@ -1,9 +1,9 @@
-import os
 import configparser
+import logging
+import os
 from collections.abc import Generator
 from contextlib import contextmanager
-import logging
-from typing import Any, Optional
+from typing import Any
 
 import psycopg2
 import psycopg2.extras
@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Global connection pool
-_connection_pool: Optional[psycopg2.pool.ThreadedConnectionPool] = None
+_connection_pool: psycopg2.pool.ThreadedConnectionPool | None = None
 _CONFIG_PATH = os.getenv("DB_CONFIG_FILE", "config/db.config.ini")
 
 
