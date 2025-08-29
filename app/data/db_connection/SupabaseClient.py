@@ -8,7 +8,6 @@ from typing import Any, Optional
 import psycopg2
 import psycopg2.extras
 import psycopg2.pool
-import logging
 
 logging.basicConfig(level=logging.INFO)
 
@@ -68,7 +67,7 @@ def init_connection_pool() -> None:
         logger.info("Database connection pool initialized")
     except Exception as e:
         logger.error(f"Failed to initialize connection pool: {e!s}")
-        raise exception(f"Failed to initialize connection pool: {e!s}") from e
+        raise Exception(f"Failed to initialize connection pool: {e!s}") from e
 
 
 def get_db_connection():
@@ -79,7 +78,7 @@ def get_db_connection():
         return _connection_pool.getconn()
     except Exception as e:
         logger.error(f"Failed to get connection from pool: {e!s}")
-        raise exception(f"Failed to get connection from pool: {e!s}") from e
+        raise Exception(f"Failed to get connection from pool: {e!s}") from e
 
 
 def return_db_connection(conn) -> None:

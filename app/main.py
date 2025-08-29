@@ -1,14 +1,27 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 
 from app.service.api.config import settings
 from app.service.api.v1.endpoints import api
+from app.data.db_connection.SupabaseClient import init_connection_pool, close_connection_pool
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
     description=settings.PROJECT_DESCRIPTION,
     version=settings.VERSION,
 )
+
+@app.on_event("startup")
+async def startup_event():
+    """Initialize database connection pool on startup"""
+    try:
+        init_connection_pool()
+    except Exception as e:
+        print(f"Warning: Database connection failed: {e}")
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    """Close database connection pool on shutdown"""
+    close_connection_pool()
 
 # Include API router
 app.include_router(api.router, tags=["api"])
