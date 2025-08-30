@@ -9,6 +9,8 @@ import psycopg2
 import psycopg2.extras
 import psycopg2.pool
 
+from app.service.api.config import settings
+
 logger = logging.getLogger(__name__)
 
 # Global connection pool
@@ -30,7 +32,7 @@ def init_connection_pool() -> None:
         return
 
     cfg = _load_config()
-    password = os.getenv("SUPABASE_PASSWORD") or os.getenv("DB_PASSWORD")
+    password = settings.SUPABASE_PASSWORD or os.getenv("DB_PASSWORD")
     if not password:
         raise ValueError(
             "SUPABASE_PASSWORD (or DB_PASSWORD) must be set in the environment"
