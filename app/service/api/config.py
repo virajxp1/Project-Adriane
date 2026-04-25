@@ -1,11 +1,15 @@
-import os
+from pathlib import Path
 
 from pydantic import ConfigDict
 from pydantic_settings import BaseSettings
 
+# Get the project root directory (2 levels up from this file)
+project_root = Path(__file__).parent.parent.parent.parent
+env_file_path = project_root / ".env"
+
 
 class Settings(BaseSettings):
-    model_config = ConfigDict(env_file=".env", case_sensitive=True)
+    model_config = ConfigDict(env_file=str(env_file_path), case_sensitive=True)
 
     PROJECT_NAME: str = "Project-Adriane"
     PROJECT_DESCRIPTION: str = "Find your search"
@@ -13,12 +17,12 @@ class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
 
     # API tokens
-    OPEN_ROUTER_API_KEY: str = os.environ.get("OPEN_ROUTER_API_KEY", "")
-    HUGGINGFACE_API_TOKEN: str = os.environ.get("HUGGINGFACE_API_TOKEN", "")
-    SUPABASE_PASSWORD: str = os.environ.get("SUPABASE_PASSWORD", "")
-    SUPABASE_API_KEY: str = os.environ.get("SUPABASE_API_KEY", "")
-    SUPABASE_ACCESS_TOKEN: str = os.environ.get("SUPABASE_ACCESS_TOKEN", "")
-    SUPABASE_PROJECT_ID: str = os.environ.get("SUPABASE_PROJECT_ID", "")
+    OPEN_ROUTER_API_KEY: str = ""
+    HUGGINGFACE_API_TOKEN: str = ""
+    SUPABASE_PASSWORD: str = ""
+    SUPABASE_API_KEY: str = ""
+    SUPABASE_ACCESS_TOKEN: str = ""
+    SUPABASE_PROJECT_ID: str = ""
 
 
 settings = Settings()
